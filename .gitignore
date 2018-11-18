@@ -1,0 +1,40 @@
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.classpath
+.checkstyle
+.factorypath
+.project
+.settings/
+.svn/
+.tern-project
+*.zip
+~*
+*.pdf
+tmp/
+$Recycle.Bin
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+/out/
+atlassian-ide-plugin.xml
+
+# NetBeans
+nbproject/private
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+nb-configuration.xml
+
+# JavaScript & Visual Studio Code
+node_modules
