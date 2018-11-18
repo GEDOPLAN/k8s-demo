@@ -1,5 +1,10 @@
 FROM openjdk:8
 
-ADD target/${project.build.finalName}.jar /maven/${project.build.finalName}.jar
+ADD target/k8s-demo-hello.jar /opt/
+#ADD target/${project.build.finalName}.jar /opt/
+#ADD maven/* /opt/
 
-CMD [ "java", "-cp", "/maven/${project.build.finalName}.jar", "de.gedoplan.demo.Hello" ]
+CMD [ "java", "-jar", "/opt/k8s-demo-hello.jar" ]
+#CMD [ "java", "-jar", "/opt/${project.build.finalName}.jar" ]
+
+
