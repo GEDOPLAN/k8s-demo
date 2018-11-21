@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rest-mee
+spec:
+  containers:
+  - image: gedoplan/k8s-demo-rest-mee
+    imagePullPolicy: IfNotPresent
+    name: k8s-demo-rest-mee
+    ports:
+    - containerPort: 8080
+      protocol: TCP

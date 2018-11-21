@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: rest-mee
+spec:
+  rules:
+  - host: rest-mee.localtest.me
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: rest-mee
+          servicePort: 8080

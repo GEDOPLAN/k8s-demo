@@ -1,0 +1,21 @@
+apiVersion: apps/v1beta2
+kind: ReplicaSet
+metadata:
+  name: rest-mee
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rest-mee
+  template:
+    metadata:
+      labels:
+        app: rest-mee
+    spec:
+      containers:
+      - name: rest-mee
+        image: gedoplan/k8s-demo-rest-mee
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          protocol: TCP
