@@ -1,0 +1,54 @@
+apiVersion: apps/v1beta2
+kind: ReplicaSet
+metadata:
+  name: rest-war
+  labels:
+    app: rest-war
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rest-war
+  template:
+    metadata:
+      labels:
+        app: rest-war
+    spec:
+      containers:
+      - name: rest-war
+        image: gedoplan/k8s-demo-rest-war
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rest-war
+  labels:
+    app: rest-war
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: rest-war
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: rest-war
+  labels:
+    app: rest-war
+spec:
+  rules:
+  - host: rest-war.localtest.me
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: rest-war
+          servicePort: 8080
