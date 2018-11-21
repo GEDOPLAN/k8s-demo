@@ -38,3 +38,6 @@ nb-configuration.xml
 
 # JavaScript & Visual Studio Code
 node_modules
+
+# Mind Maps
+*.xmind
