@@ -38,8 +38,14 @@
 
       <dependency>
         <groupId>de.gedoplan</groupId>
+        <artifactId>baselibs-persistence</artifactId>
+        <version>1.6</version>
+      </dependency>
+
+      <dependency>
+        <groupId>de.gedoplan</groupId>
         <artifactId>baselibs-utils</artifactId>
-        <version>1.0.21</version>
+        <version>1.6</version>
       </dependency>
 
       <dependency>
