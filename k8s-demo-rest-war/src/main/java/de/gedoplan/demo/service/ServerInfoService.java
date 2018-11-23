@@ -1,4 +1,4 @@
-package de.gedoplan.demo;
+package de.gedoplan.demo.service;
 
 import java.net.InetAddress;
 

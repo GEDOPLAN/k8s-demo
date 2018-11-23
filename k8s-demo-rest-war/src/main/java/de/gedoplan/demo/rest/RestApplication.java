@@ -1,4 +1,4 @@
-package de.gedoplan.demo;
+package de.gedoplan.demo.rest;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

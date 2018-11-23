@@ -1,4 +1,6 @@
-package de.gedoplan.demo;
+package de.gedoplan.demo.rest;
+
+import de.gedoplan.demo.service.ServerInfoService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
