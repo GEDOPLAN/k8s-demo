@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "rest-war.name" . }}
+  labels:
+    app: {{ template "rest-war.name" . }}
+    chart: {{ template "rest-war.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "rest-war.name" . }}
+    release: {{ .Release.Name }}

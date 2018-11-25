@@ -1,0 +1,4 @@
+apiVersion: v1
+name: rest-war
+description: Deploy a simple REST service as WAR deployment
+version: 1.0
