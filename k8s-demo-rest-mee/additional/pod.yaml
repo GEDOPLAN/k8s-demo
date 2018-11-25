@@ -5,6 +5,7 @@ metadata:
 spec:
   containers:
   - image: gedoplan/k8s-demo-rest-mee
+    # Use IfNotPresent for local demo only; omit imagePullPolicy otherwise
     imagePullPolicy: IfNotPresent
     name: k8s-demo-rest-mee
     ports:
