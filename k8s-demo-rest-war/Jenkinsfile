@@ -61,10 +61,19 @@ stages {
 	        }
 	    }
 	}
+/*
 	stage('Build Docker Images') {
 		steps {
 	        container('docker') {
 	            sh "docker build -t gedoplan/k8s-demo-rest-war ./k8s-demo-rest-war"
+	        }
+	    } 
+	}
+*/
+	stage('Build Docker Images') {
+		steps {
+	        container('maven') {
+	            sh "cd k8s-demo-rest-war; mvn -Pdocker docker:build"
 	        }
 	    } 
 	}
