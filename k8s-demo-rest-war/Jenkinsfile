@@ -1,0 +1,81 @@
+pipeline {
+	options {
+        disableConcurrentBuilds()
+    }
+	
+agent {
+	kubernetes {
+		label 'rest-war-build'
+		defaultContainer 'jnlp'
+      yaml """
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    build-name: rest-war-build
+spec:
+  containers:
+  - name: maven
+    image: maven:3.5-jdk-8-alpine
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+    - mountPath: /root/.m2/repository
+      name: m2
+  - name: docker
+    image: docker:latest
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+    - mountPath: /var/run/docker.sock
+      name: docker
+  - name: helm
+    image: devth/helm:v2.9.0
+    command:
+    - cat
+    tty: true
+  volumes:
+  - name: m2
+    persistentVolumeClaim:
+      claimName: pvc-m2-repository
+  - name: docker
+    hostPath:
+      path: /var/run/docker.sock
+  #serviceAccountName: jenkins
+"""
+	}
+}
+
+stages {
+	stage('Checkout Project') {
+		steps {
+			checkout scm: scm, poll: false
+		}
+	}    	
+	stage('Build Maven project') {
+		steps {
+	        container('maven') {
+	            sh 'mvn -B install'
+	        }
+	    }
+	}
+	stage('Build Docker Images') {
+		steps {
+	        container('docker') {
+	            sh "docker build -t gedoplan/k8s-demo-rest-war ."
+	        }
+	    } 
+	}
+    stage('Deploy Application in Test') {
+		steps {
+	        container('helm') {
+	                sh "helm init"
+                    sh "helm del --purge rest-war-test"
+	                sh "helm install --wait --timeout 500 rest-war-test ./helm"
+	        }
+	    }
+	}
+}
+}
