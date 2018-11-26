@@ -25,14 +25,6 @@ spec:
       name: m2
     - mountPath: /var/run/docker.sock
       name: docker
-  - name: docker
-    image: docker:latest
-    command:
-    - cat
-    tty: true
-    volumeMounts:
-    - mountPath: /var/run/docker.sock
-      name: docker
   - name: helm
     image: devth/helm:v2.9.0
     command:
@@ -45,13 +37,12 @@ spec:
   - name: docker
     hostPath:
       path: /var/run/docker.sock
-  #serviceAccountName: jenkins
 """
 	}
 }
 
 stages {
-	stage('Checkout Project') {
+	stage('Checkout project') {
 		steps {
 			checkout scm: scm, poll: false
 		}
@@ -63,23 +54,21 @@ stages {
 	        }
 	    }
 	}
-/*
-	stage('Build Docker Images') {
+	stage('Test project') {
 		steps {
-	        container('docker') {
-	            sh "docker build -t gedoplan/k8s-demo-rest-war ./k8s-demo-rest-war"
+	        container('maven') {
+	            sh 'echo No tests found'
 	        }
-	    } 
+	    }
 	}
-*/
-	stage('Build Docker Images') {
+	stage('Build Docker image') {
 		steps {
 	        container('maven') {
 	            sh "cd k8s-demo-rest-war; mvn -Pdocker docker:build"
 	        }
 	    } 
 	}
-    stage('Deploy Application in Test') {
+    stage('Deploy application in test') {
 		steps {
 	        container('helm') {
 	                sh "helm init"
