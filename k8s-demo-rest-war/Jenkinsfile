@@ -23,6 +23,8 @@ spec:
     volumeMounts:
     - mountPath: /root/.m2/repository
       name: m2
+    - mountPath: /var/run/docker.sock
+      name: docker
   - name: docker
     image: docker:latest
     command:
