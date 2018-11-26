@@ -57,14 +57,14 @@ stages {
 	stage('Build Maven project') {
 		steps {
 	        container('maven') {
-	            sh 'mvn -B install'
+	            sh 'mvn -B -U install'
 	        }
 	    }
 	}
 	stage('Build Docker Images') {
 		steps {
 	        container('docker') {
-	            sh "docker build -t gedoplan/k8s-demo-rest-war ."
+	            sh "docker build -t gedoplan/k8s-demo-rest-war ./k8s-demo-rest-war"
 	        }
 	    } 
 	}
@@ -73,7 +73,7 @@ stages {
 	        container('helm') {
 	                sh "helm init"
                     sh "helm del --purge rest-war-test"
-	                sh "helm install --wait --timeout 500 rest-war-test ./helm"
+	                sh "helm install --wait --timeout 500 rest-war-test ./k8s-demo-rest-war/helm"
 	        }
 	    }
 	}
