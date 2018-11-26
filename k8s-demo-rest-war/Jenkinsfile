@@ -83,8 +83,8 @@ stages {
 		steps {
 	        container('helm') {
 	                sh "helm init"
-                    sh "helm delete --purge rest-war-test || test 0=0"
-	                sh "helm install --wait --timeout 60 --name rest-war-test ./k8s-demo-rest-war/helm"
+                    sh "helm delete --purge rest-war || test 0=0"
+	                sh "helm install --wait --timeout 60 --name rest-war ./k8s-demo-rest-war/helm"
 	        }
 	    }
 	}
