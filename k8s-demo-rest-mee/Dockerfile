@@ -1,7 +1,8 @@
-FROM openjdk:8
+#FROM openjdk:8
+FROM gcr.io/distroless/java
 
 ADD maven/* /opt/
 
-CMD [ "java", "-cp", "/opt/*", "de.gedoplan.demo.Main" ]
+ENTRYPOINT [ "java", "-cp", "/opt/*", "de.gedoplan.demo.Main" ]
 
 EXPOSE 8080

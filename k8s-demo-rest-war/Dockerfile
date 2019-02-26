@@ -13,4 +13,4 @@ RUN cd $HOME \
     && rm -fr $JBOSS_HOME/standalone/configuration/standalone_xml_history
     
 # Start WildFly
-CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-c", "standalone-full.xml", "-b", "0.0.0.0"]
+ENTRYPOINT ["/opt/jboss/wildfly/bin/standalone.sh", "-c", "standalone-full.xml", "-b", "0.0.0.0"]
