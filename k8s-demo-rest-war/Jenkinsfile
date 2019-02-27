@@ -3,79 +3,51 @@ pipeline {
         disableConcurrentBuilds()
     }
 	
-agent {
-	kubernetes {
-		label 'rest-war-build'
-		defaultContainer 'jnlp'
-      yaml """
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    build-name: rest-war-build
-spec:
-  containers:
-  - name: maven
-    image: maven:3.5-jdk-8-alpine
-    command:
-    - cat
-    tty: true
-    volumeMounts:
-    - mountPath: /root/.m2/repository
-      name: m2
-    - mountPath: /var/run/docker.sock
-      name: docker
-  - name: helm
-    image: devth/helm:v2.9.0
-    command:
-    - cat
-    tty: true
-  volumes:
-  - name: m2
-    persistentVolumeClaim:
-      claimName: pvc-m2-repository
-  - name: docker
-    hostPath:
-      path: /var/run/docker.sock
-"""
-	}
-}
-
-stages {
-	stage('Checkout project') {
-		steps {
-			checkout scm: scm, poll: false
+	agent {
+		kubernetes {
+			label 'label-agent'
+			defaultContainer 'jnlp'
+      		yamlFile 'src/main/jenkins/build-pod.yaml'
 		}
-	}    	
-	stage('Build Maven project') {
-		steps {
-	        container('maven') {
-	            sh 'mvn -B -U install'
-	        }
-	    }
 	}
-	stage('Test project') {
-		steps {
-	        container('maven') {
-	            sh 'echo No tests found'
-	        }
-	    }
+
+	stages {
+		stage('Checkout project') {
+			steps {
+				checkout scm: scm, poll: false
+			}
+		}
+		    	
+		stage('Build Maven project') {
+			steps {
+	        	container('maven') {
+	            	sh 'mvn -B package'
+	        	}
+	    	}
+		}
+		
+		stage('Test project') {
+			steps {
+	    	    container('maven') {
+	        	    sh 'echo No tests found'
+	        	}
+	    	}
+		}
+
+		stage('Build Docker image') {
+			steps {
+	        	container('maven') {
+	            	sh 'mvn -Pdocker docker:build'
+	        	}
+	    	} 
+		}
+
+    	stage('Deploy application in test') {
+			steps {
+	        	container('git-push') {
+	            	sh 'git-push "https://service.gedoplan.de/git/r/k8s-deployments/gedoplan-apps.git" k8s-demo-rest-war/src/main/k8s k8s-demo-rest-war test 1.0'
+	        	}
+	    	}
+		}
 	}
-	stage('Build Docker image') {
-		steps {
-	        container('maven') {
-	            sh "cd k8s-demo-rest-war; mvn -Pdocker docker:build"
-	        }
-	    } 
-	}
-    stage('Deploy application in test') {
-		steps {
-	        container('helm') {
-	                sh "helm init"
-                    sh "helm delete --purge rest-war || test 0=0"
-	                sh "helm install --wait --timeout 60 --name rest-war ./k8s-demo-rest-war/helm"
-	        }
-	    }
-	}
-}
 }
