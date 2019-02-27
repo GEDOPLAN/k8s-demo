@@ -18,6 +18,7 @@ spec:
 
   - name: git-push
     image: docker.gedoplan.de/git-push
+    imagePullPolicy: IfNotPresent
     command:
     - cat
     tty: true
