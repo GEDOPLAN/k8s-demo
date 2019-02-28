@@ -214,16 +214,11 @@ spec:
     - port: 8080
       name: http
       targetPort: 8080
+      nodePort: 30079
       
   selector:
     component: "jenkins-jenkins-master"
-  type: LoadBalancer
-  
-  loadBalancerSourceRanges:
-    - 0.0.0.0/0
-    
-  
-  
+  type: NodePort
 
 ---
 # Source: jenkins/templates/jenkins-master-deployment.yaml
