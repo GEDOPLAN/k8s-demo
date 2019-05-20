@@ -255,7 +255,7 @@ spec:
       serviceAccountName: "default"
       initContainers:
         - name: "copy-default-config"
-          image: "jenkins/jenkins:lts"
+          image: "jenkins/jenkins:2.166"
           imagePullPolicy: "Always"
           command: [ "sh", "/var/jenkins_config/apply_config.sh" ]
           resources:
