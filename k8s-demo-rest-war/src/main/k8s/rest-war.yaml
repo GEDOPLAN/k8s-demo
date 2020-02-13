@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: rest-war
-        image: gedoplan/k8s-demo-rest-war
+        image: docker.gedoplan.de/showcase/k8s-demo-rest-war
         # Use IfNotPresent for local demo only; omit imagePullPolicy otherwise
         imagePullPolicy: IfNotPresent
         ports:

@@ -42,7 +42,7 @@
             <configuration>
               <images>
                 <image>
-                  <name>gedoplan/${project.artifactId}</name>
+                  <name>docker.gedoplan.de/showcase/${project.artifactId}</name>
                   <build>
                     <dockerFileDir>${project.basedir}</dockerFileDir>
                     <assembly>

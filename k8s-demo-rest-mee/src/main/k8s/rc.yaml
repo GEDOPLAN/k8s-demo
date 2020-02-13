@@ -13,7 +13,7 @@
 #    spec:
 #      containers:
 #      - name: rest-mee
-#        image: gedoplan/k8s-demo-rest-mee
+#        image: docker.gedoplan.de/showcase/k8s-demo-rest-mee
 #        # Use IfNotPresent for local demo only; omit imagePullPolicy otherwise
 #        imagePullPolicy: IfNotPresent
 #        ports:
