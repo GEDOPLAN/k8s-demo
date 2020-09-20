@@ -1,4 +1,4 @@
-FROM jboss/wildfly:14.0.1.Final
+FROM jboss/wildfly:20.0.0.Final
 
 # Add deployment
 ADD --chown=jboss:jboss maven/* /opt/jboss/wildfly/standalone/deployments/

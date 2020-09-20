@@ -36,7 +36,10 @@ public class HelloResource {
     StringBuilder sb = new StringBuilder();
 
     sb.append("\"Hello World!\" from " + this.serverInfoService.getDescription());
-    sb.append("\n  powered by " + System.getProperty("gedoplan.name"));
+    String gedoplanName = System.getProperty("gedoplan.name");
+    if (gedoplanName != null) {
+      sb.append("\n  powered by " + gedoplanName);
+    }
 
     if (verbose) {
       sb.append("\n  called from " + this.servletRequest.getRemoteHost() + " (" + this.servletRequest.getRemoteAddr() + ")");

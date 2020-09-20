@@ -15,8 +15,8 @@
 
   <dependencies>
     <dependency>
-      <groupId>javax</groupId>
-      <artifactId>javaee-api</artifactId>
+      <groupId>jakarta.platform</groupId>
+      <artifactId>jakarta.jakartaee-web-api</artifactId>
       <scope>provided</scope>
     </dependency>
 
@@ -67,7 +67,7 @@
                 <image>
                   <name>docker.gedoplan.de/showcase/${project.artifactId}</name>
                   <build>
-                    <dockerFileDir>${project.basedir}</dockerFileDir>
+                    <contextDir>${project.basedir}</contextDir>
                     <assembly>
                       <descriptorRef>artifact</descriptorRef>
                     </assembly>
