@@ -16,12 +16,12 @@ spec:
     - mountPath: /var/run/docker.sock
       name: docker
 
-  - name: git-push
-    image: docker.gedoplan.de/git-push
-    imagePullPolicy: IfNotPresent
-    command:
-    - cat
-    tty: true
+#  - name: git-push
+#    image: docker.gedoplan.de/git-push
+#    imagePullPolicy: IfNotPresent
+#    command:
+#    - cat
+#    tty: true
 
   volumes:
   - name: m2

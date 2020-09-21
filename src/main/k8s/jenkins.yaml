@@ -157,13 +157,13 @@ data:
     # Copy plugins to shared volume
     cp -n /usr/share/jenkins/ref/plugins/* /var/jenkins_plugins;
   plugins.txt: |-
-    kubernetes:1.18.3
-    workflow-job:2.35
+    kubernetes:1.25.7
+    workflow-job:2.38
     workflow-aggregator:2.6
-    credentials-binding:1.18
-    git:3.10.1
-    blueocean:1.17.0
-    pipeline-utility-steps:2.3.0
+    credentials-binding:1.23
+    git:4.2.2
+    blueocean:1.23.2
+    pipeline-utility-steps:2.5.0
 ---
 # Source: jenkins/templates/home-pvc.yaml
 kind: PersistentVolumeClaim
@@ -231,7 +231,7 @@ spec:
 ---
 # Source: jenkins/templates/jenkins-master-deployment.yaml
 
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: jenkins
@@ -265,7 +265,7 @@ spec:
       serviceAccountName: "default"
       initContainers:
         - name: "copy-default-config"
-          image: "jenkins/jenkins:2.176.2-alpine"
+          image: "jenkins/jenkins:2.249.1-lts-alpine"
           imagePullPolicy: "Always"
           command: [ "sh", "/var/jenkins_config/apply_config.sh" ]
           resources:
@@ -291,7 +291,7 @@ spec:
               name: secrets-dir
       containers:
         - name: jenkins
-          image: "jenkins/jenkins:2.194-alpine"
+          image: "jenkins/jenkins:2.249.1-lts-alpine"
           imagePullPolicy: "Always"
           args: [ "--argumentsRealm.passwd.$(ADMIN_USER)=$(ADMIN_PASSWORD)",  "--argumentsRealm.roles.$(ADMIN_USER)=admin"]
           env:
