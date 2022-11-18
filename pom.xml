@@ -6,7 +6,7 @@
   <parent>
     <groupId>de.gedoplan</groupId>
     <artifactId>build-master</artifactId>
-    <version>2020.6.3</version>
+    <version>2022.10.1</version>
   </parent>
 
   <artifactId>k8s-demo</artifactId>
@@ -14,14 +14,10 @@
 
   <packaging>pom</packaging>
 
-  <properties>
-    <java.code.version>1.8</java.code.version>
-  </properties>
-
   <repositories>
     <repository>
       <id>gedoplanPublic</id>
-      <url>http://service.gedoplan.de/nexus/content/groups/public</url>
+      <url>https://service.gedoplan.de/nexus/content/groups/public</url>
     </repository>
   </repositories>
 
