@@ -38,7 +38,7 @@ spec:
     app: rest-war
 
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: rest-war
@@ -50,6 +50,9 @@ spec:
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: rest-war
-          servicePort: 8080
+          service:
+            name: rest-war
+            port:
+              number: 8080
