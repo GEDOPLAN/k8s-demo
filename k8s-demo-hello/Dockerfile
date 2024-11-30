@@ -1,5 +1,4 @@
-#FROM openjdk:8
-FROM gcr.io/distroless/java
+FROM gcr.io/distroless/java17
 
 ADD target/k8s-demo-hello.jar /opt/
 #ADD target/${project.build.finalName}.jar /opt/

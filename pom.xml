@@ -38,19 +38,20 @@
       <dependency>
         <groupId>de.gedoplan</groupId>
         <artifactId>baselibs-persistence</artifactId>
-        <version>2.0</version>
+        <version>10.1</version>
       </dependency>
 
       <dependency>
         <groupId>de.gedoplan</groupId>
         <artifactId>baselibs-utils</artifactId>
-        <version>1.10</version>
+        <version>10.3</version>
       </dependency>
 
       <dependency>
         <groupId>jakarta.platform</groupId>
-        <artifactId>jakarta.jakartaee-web-api</artifactId>
-        <version>8.0.0</version>
+        <artifactId>jakarta.jakartaee-api</artifactId>
+        <version>10.0.0</version>
+        <scope>provided</scope>
       </dependency>
 
       <dependency>
@@ -75,14 +76,14 @@
 
       <dependency>
         <groupId>org.glassfish</groupId>
-        <artifactId>javax.json</artifactId>
-        <version>1.1</version>
+        <artifactId>jakarta.json</artifactId>
+        <version>2.0.1</version>
       </dependency>
 
       <dependency>
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
-        <version>1.18.12</version>
+        <version>1.18.34</version>
       </dependency>
 
     </dependencies>
@@ -94,7 +95,7 @@
         <plugin>
           <groupId>io.fabric8</groupId>
           <artifactId>docker-maven-plugin</artifactId>
-          <version>0.34.0</version>
+          <version>0.45.0</version>
         </plugin>
       </plugins>
     </pluginManagement>
