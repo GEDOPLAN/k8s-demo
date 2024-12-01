@@ -74,7 +74,7 @@
             <configuration>
               <images>
                 <image>
-                  <name>docker.gedoplan.de/showcase/${project.artifactId}</name>
+                  <name>gedoplan/${project.artifactId}</name>
                   <build>
                     <contextDir>${project.basedir}</contextDir>
                     <assembly>
