@@ -25,6 +25,7 @@
     <module>k8s-demo-hello</module>
     <module>k8s-demo-rest-mee</module>
     <module>k8s-demo-rest-war</module>
+    <module>k8s-demo-rest-quarkus</module>
   </modules>
 
   <dependencyManagement>
