@@ -1,16 +1,17 @@
-FROM jboss/wildfly:20.0.0.Final
+FROM quay.io/wildfly/wildfly:31.0.1.Final-jdk17
 
 # Add deployment
-ADD --chown=jboss:jboss maven/* /opt/jboss/wildfly/standalone/deployments/
+COPY --chown=jboss:jboss target/k8s-demo-rest-war.war /opt/jboss/wildfly/standalone/deployments/
 
 USER jboss
 
 # Setup WildFly
-ADD --chown=jboss:jboss src/main/wildfly/wildfly-setup.cli $HOME
-RUN cd $HOME \
-    && sh $JBOSS_HOME/bin/jboss-cli.sh --file=wildfly-setup.cli \
-    && rm wildfly-setup.cli \
-    && rm -fr $JBOSS_HOME/standalone/configuration/standalone_xml_history
-   
+COPY src/main/wildfly/wildfly-setup.cli /opt/jboss/
+
+RUN cd /opt/jboss/ \
+    && sh /opt/jboss/wildfly/bin/jboss-cli.sh --file=wildfly-setup.cli \
+    && rm -fr /opt/jboss/wildfly/standalone/configuration/standalone_xml_history
+# RUN rm -fr /opt/jboss/wildfly-setup.cli   # doesn't work, "no permission"
+
 # Start WildFly
-ENTRYPOINT ["/opt/jboss/wildfly/bin/standalone.sh", "-c", "standalone-full.xml", "-b", "0.0.0.0"]
+ENTRYPOINT ["/opt/jboss/wildfly/bin/standalone.sh", "-c", "standalone.xml", "-b", "0.0.0.0"]

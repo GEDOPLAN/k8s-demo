@@ -3,8 +3,8 @@ package de.gedoplan.demo.persistence;
 import de.gedoplan.baselibs.persistence.repository.SingleIdEntityRepository;
 import de.gedoplan.demo.entity.Person;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 @Transactional(rollbackOn = Exception.class)
