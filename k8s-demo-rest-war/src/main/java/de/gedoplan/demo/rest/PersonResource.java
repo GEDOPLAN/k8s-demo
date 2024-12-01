@@ -4,7 +4,6 @@ import de.gedoplan.demo.entity.Person;
 import de.gedoplan.demo.persistence.PersonRepository;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 import jakarta.inject.Inject;
@@ -42,12 +41,7 @@ public class PersonResource {
   @Path(ID_TEMPLATE)
   @Produces(MediaType.APPLICATION_XML)
   public Person getById(@PathParam(ID_NAME) Integer id) {
-    Person person = this.personRepository.findById(id);
-    if (person != null) {
-      return person;
-    }
-
-    throw new NotFoundException();
+    return this.personRepository.findById(id).orElseThrow(NotFoundException::new);
   }
 
   @PUT
@@ -55,7 +49,7 @@ public class PersonResource {
   @Consumes(MediaType.APPLICATION_XML)
   public void updatePerson(@PathParam(ID_NAME) Integer id, Person Person) {
     if (!id.equals(Person.getId())) {
-      throw new BadRequestException("id of updated object must be unchanged");
+      throwBadRequestException("id of updated object must be unchanged");
     }
 
     this.personRepository.merge(Person);
@@ -63,15 +57,28 @@ public class PersonResource {
 
   @POST
   @Consumes(MediaType.APPLICATION_XML)
-  public Response createPerson(Person Person, @Context UriInfo uriInfo) throws URISyntaxException {
+  public Response createPerson(Person Person, @Context UriInfo uriInfo) {
     if (Person.getId() != null) {
-      throw new BadRequestException("id of new entry must not be set");
+      throwBadRequestException("id of new entry must not be set");
     }
 
     this.personRepository.persist(Person);
 
-    URI createdUri = uriInfo.getAbsolutePathBuilder().path(PATH).path(ID_TEMPLATE).resolveTemplate(ID_NAME, Person.getId()).build();
+    URI createdUri = uriInfo.getAbsolutePathBuilder()
+        .path(PATH)
+        .path(ID_TEMPLATE)
+        .resolveTemplate(ID_NAME, Person.getId())
+        .build();
     return Response.created(createdUri).build();
+  }
+
+  public static void throwBadRequestException(String message) {
+    throw new BadRequestException(
+        Response.status(Response.Status.BAD_REQUEST)
+            .entity(message)
+            .type(MediaType.TEXT_PLAIN)
+            .build()
+    );
   }
 
   @DELETE

@@ -12,7 +12,6 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.MultivaluedMap;
 
 @Path("hello")
 @ApplicationScoped
@@ -25,28 +24,29 @@ public class HelloResource {
   HttpServletRequest servletRequest;
 
   @Context
-  private HttpHeaders httpHeaders;
+  HttpHeaders httpHeaders;
 
   @GET
   @Produces(MediaType.TEXT_PLAIN)
   public String getHello(@QueryParam("verbose") boolean verbose) {
-    StringBuilder sb = new StringBuilder();
+    var baseMessage = "\"Hello World!\" from " + this.serverInfoService.getDescription();
 
-    sb.append("\"Hello World!\" from " + this.serverInfoService.getDescription());
-    String gedoplanName = System.getProperty("gedoplan.name");
+    String gedoplanInfo = "";
+    var gedoplanName = System.getProperty("gedoplan.name");
     if (gedoplanName != null) {
-      sb.append("\n  powered by " + gedoplanName);
+      gedoplanInfo = "\n  powered by " + gedoplanName;
     }
 
+    String verboseInfo = "";
     if (verbose) {
-      sb.append("\n  called from " + this.servletRequest.getRemoteHost() + " (" + this.servletRequest.getRemoteAddr() + ")");
-      MultivaluedMap<String, String> requestHeaders = this.httpHeaders.getRequestHeaders();
-      for (Entry<String, List<String>> entry : requestHeaders.entrySet()) {
-        sb.append("\n  " + entry.getKey() + "=" + entry.getValue());
+      verboseInfo = "\n  called from " + this.servletRequest.getRemoteHost()
+          + " (" + this.servletRequest.getRemoteAddr() + ")";
+      var requestHeaders = this.httpHeaders.getRequestHeaders();
+      for (var entry : requestHeaders.entrySet()) {
+        verboseInfo += "\n  " + entry.getKey() + "=" + entry.getValue();
       }
     }
 
-    sb.append("\n");
-    return sb.toString();
+    return baseMessage + gedoplanInfo + verboseInfo + "\n";
   }
 }
