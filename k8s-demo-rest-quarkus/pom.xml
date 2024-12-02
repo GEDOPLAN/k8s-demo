@@ -57,6 +57,10 @@
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-kubernetes-client</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -117,6 +121,20 @@
     </build>
 
     <profiles>
+        <profile>
+            <id>docker</id>
+            <properties>
+                <quarkus.container-image.builder>docker</quarkus.container-image.builder>
+                <quarkus.container-image.dockerfile-path>src/main/docker/Dockerfile.jvm</quarkus.container-image.dockerfile-path>
+            </properties>
+            <dependencies>
+            <dependency>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-container-image-docker</artifactId>
+                <version>${quarkus.platform.version}</version>
+            </dependency>
+            </dependencies>
+        </profile>
         <profile>
             <id>native</id>
             <activation>
