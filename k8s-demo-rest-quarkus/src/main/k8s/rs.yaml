@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: rest-quarkus
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rest-quarkus
+  template:
+    metadata:
+      labels:
+        app: rest-quarkus
+    spec:
+      containers:
+      - name: rest-mee
+        image: gedoplan/k8s-demo-rest-quarkus
+        # Use IfNotPresent for local demo only; omit imagePullPolicy otherwise
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          protocol: TCP
